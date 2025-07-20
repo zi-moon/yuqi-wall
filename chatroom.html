@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>子月夜語牆 ─ 語句聊天室</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"  defer></script>
+    
+  </head>
+  
+    
+
+<body>
+
+  <h1>🌌 子月夜語牆 ─ 留言牆</h1>
+
+  <!-- 封鎖功能 -->
+  <label for="blockName">封鎖暱稱：</label>
+  <input type="text" id="blockName" placeholder="輸入要封鎖的名字">
+  <button onclick="blockUser()">封鎖</button>
+
+  <!-- 暱稱與留言 -->
+  <label for="nicknameInput">暱稱：</label>
+  <input type="text" id="nicknameInput" placeholder="請輸入暱稱">
+  <label for="messageInput">請寫下你的心情...</label>
+  <textarea id="messageInput" rows="3" placeholder="...（Enter 即可低語）"></textarea>
+  <button onclick="submitMessage()">送出</button>
+
+  <!-- 語句展示區 -->
+  <div id="messageWall" style="margin-top:30px;"></div>
+
+  <!-- 語感歡迎詞 -->
+  <p id="welcomeMessage">🌕 今晚的語句牆靜靜閃爍，等待某人為它落下一句話。</p>
+
+  <!-- 🎼 語感浮動播放器 -->
+<div id="audioPlayer">/
+  <span id="trackLabel">🎧 正在播放： 一念千年（国风版）</span><br>
+  <audio id="audioElement" controls src="yinian.mp3"></audio>
+</div>
+
+<!-- 🎼 曲目選單 -->
+<select id="musicSelector" onchange="playSelectedTrack(this.value)">
+  <option value="yinian.mp3">一念千年</option>
+  <option value="https://www.youtube.com/embed/nv8ZYFP7NS0">最是李商隱 (YouTube)</option>  
+  <option value="https://www.youtube.com/embed/KfDOIuUYLUc">記納蘭若 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/R905iZaE9ew">故人嘆 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/dG4wxUE-fEA">墨魂 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/tYt2F9tiPQs">容若記憶 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/Y9ETvoE6fAo">陪我過個冬 (YouTube)</option>
+</select>
+<!-- 🌙語牆動畫容器 -->
+<div id="effectContainer"></div>
+</body>
+  </html>
+

@@ -1,0 +1,107 @@
+
+body {
+  background-color: #0c0c1d;
+  color: #eee;
+  font-family: "微軟正黑體", sans-serif;
+  margin: 30px;
+}
+h1 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #f5f5f5;
+}
+label, input, textarea, button {
+  display: block;
+  margin: 10px auto;
+  max-width: 300px;
+}
+input, textarea {
+  width: 100%;
+  padding: 6px 10px;
+  background-color: #222;
+  color: #ddd;
+  border: 1px solid #555;
+  border-radius: 6px;
+}
+button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#welcomeMessage {
+  text-align: center;
+  margin-top: 30px;
+  font-style: italic;
+  color: #ccc;
+}
+.msgBubble {
+  background: rgba(40,40,60,0.6);
+  padding: 12px;
+  margin: 10px auto;
+  max-width: 480px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(255,255,255,0.1);
+  font-size: 16px;
+}
+.msgTime {
+  font-size: 12px;
+  color: #aaa;
+  display: block;
+  margin-top: 4px;
+}
+#messageWall.flash {
+  animation: flash 0.5s ease;
+}
+@keyframes flash {
+  0% { box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+  100% { box-shadow: none; }
+}
+#audioPlayer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(30, 30, 30, 0.7);
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #ddd;
+  font-size: 14px;
+  z-index: 999;
+  box-shadow: 0 0 10px rgba(255,255,255,0.15);
+}
+.snowflake {
+  position: absolute;
+  top: -50px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: fall 12s linear infinite;
+}
+@keyframes fall {
+  0% { transform: translateY(0); opacity: 0.8; }
+  100% { transform: translateY(120vh); opacity: 0; }
+}
+.grain {
+  position: fixed;
+  bottom: -40px;
+  width: 4px;
+  height: 40px;
+  background: linear-gradient(to top, #f5d78e, #f9e6b3);
+  border-radius: 2px;
+  opacity: 0.6;
+  animation: swayUp 16s ease-in-out infinite;
+  z-index: 9999;
+  pointer-events: none;
+}
+@keyframes swayUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+  50% { transform: translateY(-60vh) rotate(10deg); opacity: 0.4; }
+  100% { transform: translateY(0) rotate(-10deg); opacity: 0.8; }
+}
+
+

@@ -1,0 +1,85 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>子月夜語站 ─ 暱稱登入</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: #000;
+      font-family: '微軟正黑體', sans-serif;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 300px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: none;
+      background-color: #222;
+      color: #fff;
+      outline: none;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    #enterBtn {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #enterBtn:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌒 歡迎進入子月夜語站</h1>
+  
+  <script>
+    function enterChat() {
+      const name = document.getElementById("nickname").value.trim();
+      if (name === "") return;
+
+      localStorage.setItem("chatName", name); // 儲存暱稱
+      location.href = "chatroom.html";        // 跳轉至聊天室
+    }
+
+    // 支援按下 Enter 鍵直接進入聊天室
+    document.getElementById("nickname").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        enterChat();
+      }
+    });
+  </script>
+></body><!-- 🌌 語句牆開場引語 -->
+<p style="text-align:center; color:#ccc; font-style:italic; margin-bottom:20px;">
+  🌕 今晚的語句牆靜靜閃爍，等待某人為它落下一句話。<br>
+  ── 無論長或短，都是風夜裡的星語。
+</p>
+
+<a href="chatroom.html?name=">進入聊天室</a>
+
+</html>
