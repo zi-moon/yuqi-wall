@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 328685d41c1f717d173f199f38aea54423e73d89
 body {
   background-color: #0c0c1d;
   color: #eee;
@@ -103,5 +106,8 @@ button {
   50% { transform: translateY(-60vh) rotate(10deg); opacity: 0.4; }
   100% { transform: translateY(0) rotate(-10deg); opacity: 0.8; }
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 328685d41c1f717d173f199f38aea54423e73d89

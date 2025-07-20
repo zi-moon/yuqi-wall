@@ -69,4 +69,8 @@ function applySeasonalEffect(season) {
 }
 
 // ⏳ 預設為「芒種」節氣動畫
+<<<<<<< HEAD
 window.onload = () => applySeasonalEffect("芒種");
+=======
+window.onload = () => applySeasonalEffect("芒種");
+>>>>>>> 328685d41c1f717d173f199f38aea54423e73d89
