@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>子月夜語牆 ─ 語句聊天室</title>
+
+  <style>
+    body {
+      background-color: #0c0c1d;
+      color: #eee;
+      font-family: "微軟正黑體", sans-serif;
+      margin: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #f5f5f5;
+    }
+
+    label, input, textarea, button {
+      display: block;
+      margin: 10px auto;
+      max-width: 300px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 6px 10px;
+      background-color: #222;
+      color: #ddd;
+      border: 1px solid #555;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #welcomeMessage {
+      text-align: center;
+      margin-top: 30px;
+      font-style: italic;
+      color: #ccc;
+    }
+
+    /* 留言樣式 */
+    .msgBubble {
+      background: rgba(40,40,60,0.6);
+      padding: 12px;
+      margin: 10px auto;
+      max-width: 480px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(255,255,255,0.1);
+      font-size: 16px;
+    }
+
+    .msgTime {
+      font-size: 12px;
+      color: #aaa;
+      display: block;
+      margin-top: 4px;
+    }
+
+    #messageWall.flash {
+      animation: flash 0.5s ease;
+    }
+
+    @keyframes flash {
+      0%   { box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+      100% { box-shadow: none; }
+    }
+
+    /* 浮動音樂播放器 */
+    #audioPlayer {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(30, 30, 30, 0.7);
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: #ddd;
+      font-size: 14px;
+      z-index: 999;
+      box-shadow: 0 0 10px rgba(255,255,255,0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌌 子月夜語牆 ─ 留言牆</h1>
+
+  <!-- 封鎖功能 -->
+  <label for="blockName">封鎖暱稱：</label>
+  <input type="text" id="blockName" placeholder="輸入要封鎖的名字">
+  <button onclick="blockUser()">封鎖</button>
+
+  <!-- 暱稱與留言 -->
+  <label for="nicknameInput">暱稱：</label>
+  <input type="text" id="nicknameInput" placeholder="請輸入暱稱">
+  <label for="messageInput">請寫下你的心情...</label>
+  <textarea id="messageInput" rows="3" placeholder="...（Enter 即可低語）"></textarea>
+  <button onclick="submitMessage()">送出</button>
+
+  <!-- 語句展示區 -->
+  <div id="messageWall" style="margin-top:30px;"></div>
+
+  <!-- 語感歡迎詞 -->
+  <p id="welcomeMessage">🌕 今晚的語句牆靜靜閃爍，等待某人為它落下一句話。</p>
+
+  <!-- 🎼 語感浮動播放器 -->
+<div id="audioPlayer">/
+  <span id="trackLabel">🎧 正在播放： 一念千年（国风版）</span><br>
+  <audio id="audioElement" controls src="yinian.mp3"></audio>
+</div>
+
+<!-- 🎼 曲目選單 -->
+<select id="musicSelector" onchange="playSelectedTrack(this.value)">
+  <option value="yinian.mp3">一念千年</option>
+  <option value="https://www.youtube.com/embed/nv8ZYFP7NS0">最是李商隱 (YouTube)</option>  
+  <option value="https://www.youtube.com/embed/KfDOIuUYLUc">記納蘭若 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/R905iZaE9ew">故人嘆 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/dG4wxUE-fEA">墨魂 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/tYt2F9tiPQs">容若記憶 (YouTube)</option>
+  <option value="https://www.youtube.com/embed/Y9ETvoE6fAo">陪我過個冬 (YouTube)</option>
+
+  
+
+</select>
+  </select>
+
+  
+
+  <script>
+    function blockUser() {
+      const blockName = document.getElementById("blockName").value.trim();
+      if (blockName) {
+        alert(`暱稱「${blockName}」已封鎖 🌒`);
+      }
+    }
+
+    function submitMessage() {
+      const nickname = document.getElementById("nicknameInput").value.trim() || "匿名";
+      const message = document.getElementById("messageInput").value.trim();
+      if (!message) {
+        alert("請輸入留言內容 🌌");
+        return;
+      }
+
+      const msgBox = document.createElement("div");
+      msgBox.className = "msgBubble";
+      const time = new Date().toLocaleString();
+      msgBox.innerHTML = `<strong>${nickname}</strong> 說：${message}<br><span class="msgTime">🕰️ ${time}</span>`;
+
+      const wall = document.getElementById("messageWall");
+      wall.appendChild(msgBox);
+
+      document.getElementById("welcomeMessage").textContent = `🌕 歡迎你，${nickname}，今晚的語句牆已為你打開`;
+      document.getElementById("messageInput").value = "";
+
+      wall.classList.add("flash");
+      setTimeout(() => wall.classList.remove("flash"), 400);
+    }
+
+    // 🔄 Enter鍵送出語句
+    document.getElementById("messageInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        submitMessage();
+      }
+    });
+  </script>
+  <script>
+function playSelectedTrack(src) {
+  const playerArea = document.getElementById('audioPlayer');
+  const label = document.getElementById('trackLabel');
+
+  playerArea.innerHTML = '';
+
+  if (src.includes('youtube.com')) {
+    playerArea.innerHTML = `
+      <span id="trackLabel">🎼 正在播放：語感選曲 (YouTube)</span><br>
+      <iframe width="320" height="180" 
+        src="${src}?autoplay=1" 
+        frameborder="0" 
+        allow="autoplay; encrypted-media" 
+        referrerpolicy="no-referrer-when-downgrade" 
+        allowfullscreen>
+      </iframe>`;
+  } else {
+    playerArea.innerHTML = `
+      <span id="trackLabel">🎧 正在播放： ${src}</span><br>
+      <audio id="audioElement" controls autoplay src="${src}"></audio>`;
+  }
+}
+</script>
+<!-- 🌙語牆動畫容器 -->
+<div id="effectContainer"></div>
+
+<!-- 🌌語牆動畫樣式 -->
+<style>
+  .snowflake {
+    position: absolute;
+    top: -50px;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: fall 12s linear infinite;
+  }
+
+  @keyframes fall {
+    0%   { transform: translateY(0); opacity: 0.8; }
+    100% { transform: translateY(120vh); opacity: 0; }
+  }
+</style>
+
+<!-- 🌬️語牆動畫控制邏輯 -->
+<script>
+  function applySeasonalEffect(season) {
+    const container = document.getElementById("effectContainer");
+    container.innerHTML = ""; // 清空舊動畫
+
+    if (season === "小寒") {
+      for (let i = 0; i < 30; i++) {
+        const flake = document.createElement("div");
+        flake.className = "snowflake";
+        flake.style.left = Math.random() * 100 + "%";
+        flake.style.animationDelay = Math.random() * 5 + "s";
+        container.appendChild(flake);
+      }
+    }
+
+    // 之後可以加上「芒種」、「春分」、「白露」的其他動畫樣式
+  }
+
+  
+
+</script>
+<!-- 🌾語牆動畫容器（與雪花、花瓣共用） -->
+<div id="effectContainer"></div>
+
+<!-- 🌾動畫樣式 -->
+<style>
+  .grain {
+    position: fixed;
+    bottom: -40px;
+    width: 4px;
+    height: 40px;
+    background: linear-gradient(to top, #f5d78e, #f9e6b3);
+    border-radius: 2px;
+    opacity: 0.6;
+    animation: swayUp 16s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  @keyframes swayUp {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+    50%  { transform: translateY(-60vh) rotate(10deg); opacity: 0.4; }
+    100% { transform: translateY(0) rotate(-10deg); opacity: 0.8; }
+  }
+</style>
+
+<!-- 🌬️動畫控制邏輯 -->
+<script>
+  function applySeasonalEffect(season) {
+    const container = document.getElementById("effectContainer");
+    container.innerHTML = "";
+
+    if (season === "芒種") {
+      for (let i = 0; i < 25; i++) {
+        const grain = document.createElement("div");
+        grain.className = "grain";
+        grain.style.left = Math.random() * 100 + "%";
+        grain.style.animationDelay = Math.random() * 8 + "s";
+        container.appendChild(grain);
+      }
+    }
+
+    // 其他節氣：小寒、春分、白露…可繼續擴充
+  }
+
+  // ⏳ 預設為「芒種」模式
+  window.onload = () => applySeasonalEffect("芒種");
+</script>
+
+
+</body>
+
