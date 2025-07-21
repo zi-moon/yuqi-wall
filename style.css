@@ -1,24 +1,28 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 328685d41c1f717d173f199f38aea54423e73d89
+/* 夜色背景與字體設定 */
 body {
   background-color: #0c0c1d;
   color: #eee;
   font-family: "微軟正黑體", sans-serif;
   margin: 30px;
+  overflow-x: hidden;
 }
+
+/* 標題設計 */
 h1 {
   text-align: center;
   font-size: 26px;
   margin-bottom: 20px;
   color: #f5f5f5;
+  letter-spacing: 1px;
 }
+
+/* 表單元件集中排版 */
 label, input, textarea, button {
   display: block;
   margin: 10px auto;
   max-width: 300px;
 }
+
 input, textarea {
   width: 100%;
   padding: 6px 10px;
@@ -26,7 +30,14 @@ input, textarea {
   color: #ddd;
   border: 1px solid #555;
   border-radius: 6px;
+  transition: box-shadow 0.3s ease;
 }
+
+input:focus, textarea:focus {
+  box-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+
+/* 按鈕設計 */
 button {
   background-color: #444;
   color: #fff;
@@ -34,13 +45,25 @@ button {
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
+
+button:hover {
+  background-color: #666;
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* 開場語句 */
 #welcomeMessage {
   text-align: center;
   margin-top: 30px;
   font-style: italic;
   color: #ccc;
+  font-size: 15px;
+  letter-spacing: 0.5px;
 }
+
+/* 留言泡泡 */
 .msgBubble {
   background: rgba(40,40,60,0.6);
   padding: 12px;
@@ -49,20 +72,40 @@ button {
   border-radius: 8px;
   box-shadow: 0 0 6px rgba(255,255,255,0.1);
   font-size: 16px;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
+  transition: transform 0.2s ease;
 }
+
+.msgBubble:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* 時間標記 */
 .msgTime {
   font-size: 12px;
   color: #aaa;
   display: block;
   margin-top: 4px;
 }
+
+/* 留言牆閃爍特效 */
 #messageWall.flash {
   animation: flash 0.5s ease;
 }
+
 @keyframes flash {
   0% { box-shadow: 0 0 15px rgba(255,255,255,0.3); }
   100% { box-shadow: none; }
 }
+
+/* 留言泡泡淡入 */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* 音樂播放器固定右下角 */
 #audioPlayer {
   position: fixed;
   bottom: 20px;
@@ -75,6 +118,8 @@ button {
   z-index: 999;
   box-shadow: 0 0 10px rgba(255,255,255,0.15);
 }
+
+/* 雪花與粒子特效 */
 .snowflake {
   position: absolute;
   top: -50px;
@@ -85,10 +130,12 @@ button {
   opacity: 0.7;
   animation: fall 12s linear infinite;
 }
+
 @keyframes fall {
   0% { transform: translateY(0); opacity: 0.8; }
   100% { transform: translateY(120vh); opacity: 0; }
 }
+
 .grain {
   position: fixed;
   bottom: -40px;
@@ -101,13 +148,9 @@ button {
   z-index: 9999;
   pointer-events: none;
 }
+
 @keyframes swayUp {
   0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
   50% { transform: translateY(-60vh) rotate(10deg); opacity: 0.4; }
   100% { transform: translateY(0) rotate(-10deg); opacity: 0.8; }
 }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 328685d41c1f717d173f199f38aea54423e73d89
