@@ -1,4 +1,4 @@
-/* 夜色背景與字體設定 */
+/* 🌌 夜色背景與字體設定 */
 body {
   background-color: #0c0c1d;
   color: #eee;
@@ -53,7 +53,7 @@ button:hover {
   box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
-/* 開場語句 */
+/* 🌙 歡迎語感 */
 #welcomeMessage {
   text-align: center;
   margin-top: 30px;
@@ -63,26 +63,45 @@ button:hover {
   letter-spacing: 0.5px;
 }
 
-/* 留言泡泡 */
-.msgBubble {
-  background: rgba(40,40,60,0.6);
+/* 📝 留言泡泡樣式 */
+.message {
   padding: 12px;
-  margin: 10px auto;
+  margin: 12px auto;
   max-width: 480px;
   border-radius: 8px;
-  box-shadow: 0 0 6px rgba(255,255,255,0.1);
   font-size: 16px;
-  opacity: 0;
+  box-shadow: 0 0 6px rgba(255,255,255,0.1);
   animation: fadeIn 0.6s ease-out forwards;
   transition: transform 0.2s ease;
 }
 
-.msgBubble:hover {
+.message:hover {
   transform: scale(1.02);
   box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
-/* 時間標記 */
+/* 💫 留言情緒分類配色 */
+.message.listen {
+  background-color: rgba(90, 120, 180, 0.3);
+  color: #dde9ff;
+}
+
+.message.joy {
+  background-color: rgba(220, 180, 120, 0.3);
+  color: #fff0d0;
+}
+
+.message.bufu {
+  background-color: rgba(40, 40, 40, 0.4);
+  color: #bbb;
+}
+
+.message.neutral {
+  background-color: rgba(70, 70, 70, 0.3);
+  color: #ccc;
+}
+
+/* 🕰️ 時間標記 */
 .msgTime {
   font-size: 12px;
   color: #aaa;
@@ -90,7 +109,7 @@ button:hover {
   margin-top: 4px;
 }
 
-/* 留言牆閃爍特效 */
+/* ✨ 留言牆閃爍動畫 */
 #messageWall.flash {
   animation: flash 0.5s ease;
 }
@@ -100,12 +119,12 @@ button:hover {
   100% { box-shadow: none; }
 }
 
-/* 留言泡泡淡入 */
+/* 淡入動畫 */
 @keyframes fadeIn {
   to { opacity: 1; }
 }
 
-/* 音樂播放器固定右下角 */
+/* 🎧 音樂播放器固定右下角 */
 #audioPlayer {
   position: fixed;
   bottom: 20px;
@@ -119,7 +138,7 @@ button:hover {
   box-shadow: 0 0 10px rgba(255,255,255,0.15);
 }
 
-/* 雪花與粒子特效 */
+/* ❄️ 雪花粒子特效 */
 .snowflake {
   position: absolute;
   top: -50px;

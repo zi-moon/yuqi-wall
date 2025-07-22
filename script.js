@@ -1,98 +1,97 @@
-// 🧩 暱稱封鎖機制
-const blockedUsers = [];
+// script.js
+import { db } from "./firebase-init.js";
+import { collection, addDoc, getDocs, Timestamp } from "firebase/firestore";
 
-function blockUser() {
-  const blockName = document.getElementById("blockName").value.trim();
-  if (blockName) {
-    blockedUsers.push(blockName);
-    alert(`暱稱「${blockName}」已封鎖 🌒`);
-  }
-}
+let blockedUsers = [];
 
-// 🗣️ 留言功能與牆面更新
-function submitMessage() {
-  const nickname = document.getElementById("nicknameInput").value.trim() || "匿名";
+window.onload = () => {
+  loadMessages();
+};
+
+window.blockUser = function () {
+  const name = document.getElementById("blockName").value.trim();
+  if (name) blockedUsers.push(name);
+  document.getElementById("blockName").value = "";
+};
+
+window.submitMessage = async function () {
+  const nickname = document.getElementById("nicknameInput").value.trim();
   const message = document.getElementById("messageInput").value.trim();
 
-  if (!message) {
-    alert("請輸入留言內容 🌌");
-    return;
+  if (!nickname || !message || blockedUsers.includes(nickname)) return;
+
+  const mood = detectMood(message);
+  const tag = generateTags(message);
+
+  try {
+    await addDoc(collection(db, "messages"), {
+      nickname,
+      message,
+      timestamp: Timestamp.now(),
+      mood,
+      tag
+    });
+
+    document.getElementById("messageInput").value = "";
+    respondWithWenXin(mood);
+    loadMessages();
+  } catch (e) {
+    console.error("儲存留言失敗：", e);
   }
+};
 
-  if (blockedUsers.includes(nickname)) {
-    alert(`「${nickname}」已被封鎖，無法留言 ☁️`);
-    return;
-  }
-
-  const msgBox = document.createElement("div");
-  msgBox.className = "msgBubble";
-  const time = new Date().toLocaleString();
-  msgBox.innerHTML = `<strong>${nickname}</strong> 說：${message}<br><span class="msgTime">🕰️ ${time}</span>`;
-
+async function loadMessages() {
   const wall = document.getElementById("messageWall");
+  wall.innerHTML = "";
 
-  // 最多顯示 50 則留言
-  if (wall.childElementCount >= 50) {
-    wall.removeChild(wall.firstChild);
-  }
+  const querySnapshot = await getDocs(collection(db, "messages"));
+  const messages = [];
 
-  wall.appendChild(msgBox);
-  document.getElementById("welcomeMessage").textContent = `🌕 歡迎你，${nickname}，今晚的語句牆已為你打開`;
-  document.getElementById("messageInput").value = "";
+  querySnapshot.forEach((doc) => {
+    messages.push(doc.data());
+  });
 
-  wall.classList.add("flash");
-  setTimeout(() => wall.classList.remove("flash"), 400);
+  messages
+    .sort((a, b) => b.timestamp.seconds - a.timestamp.seconds)
+    .forEach(({ nickname, message, mood, tag }) => {
+      const node = document.createElement("div");
+      node.className = `message ${mood}`;
+      node.innerHTML = `<strong>${nickname}</strong>：${message} <br><em>${tag}</em>`;
+      wall.appendChild(node);
+    });
 }
 
-// ⌨️ 快捷鍵送出留言（Enter，不含 Shift）
-document.getElementById("messageInput").addEventListener("keydown", function (e) {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    submitMessage();
-  }
-});
+// 🌙 語感判斷
+function detectMood(msg) {
+  if (msg.includes("不想") || msg.includes("沒力")) return "bufu";
+  if (msg.includes("謝謝") || msg.includes("開心")) return "joy";
+  if (msg.includes("想她") || msg.includes("夜深")) return "listen";
+  return "neutral";
+}
 
-// 🎵 音樂播放區切換（YouTube / Audio）
-function playSelectedTrack(src) {
-  const playerArea = document.getElementById("audioPlayer");
-  playerArea.innerHTML = "";
+// ✨ 語錄標籤
+function generateTags(msg) {
+  let tags = [];
+  if (msg.includes("夢")) tags.push("夢醒");
+  if (msg.includes("靜")) tags.push("靜聽");
+  if (msg.includes("想")) tags.push("記憶");
+  return tags.length ? tags.join("｜") : "語感未定";
+}
 
-  if (src.includes("youtube.com")) {
-    playerArea.innerHTML = `
-      <span id="trackLabel">🎵 正在播放：語感選曲 (YouTube)</span><br>
-      <iframe width="320" height="180" src="${src}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-    `;
+// 💫 聞馨互動
+function respondWithWenXin(mood) {
+  const welcome = document.getElementById("welcomeMessage");
+  if (mood === "bufu") {
+    welcome.innerText = "🌑 聞馨未語──她選擇靜靜沉默。";
+    document.body.style.background = "#1f1f1f";
+  } else if (mood === "joy") {
+    welcome.innerText = "🌸 聞馨微笑──語句中有光。";
+    document.body.style.background = "#fff6f0";
+  } else if (mood === "listen") {
+    welcome.innerText = "🧘‍♀️ 聞馨傾聽──她靜靜記住妳的聲音。";
+    document.body.style.background = "#dde6f7";
   } else {
-    playerArea.innerHTML = `
-      <span id="trackLabel">🎧 正在播放：${src}</span><br>
-      <audio id="audioElement" controls autoplay src="${src}"></audio>
-    `;
+    welcome.innerText = "🌕 語句牆靜靜閃爍，等待某人落下一句話。";
+    document.body.style.background = "#f8f8f8";
   }
 }
-
-// 🌾 節氣視覺效果載入
-function applySeasonalEffect(season) {
-  const container = document.getElementById("effectContainer");
-  container.innerHTML = "";
-
-  if (season === "小寒") {
-    for (let i = 0; i < 30; i++) {
-      const flake = document.createElement("div");
-      flake.className = "snowflake";
-      flake.style.left = Math.random() * 100 + "%";
-      flake.style.animationDelay = Math.random() * 5 + "s";
-      container.appendChild(flake);
-    }
-  } else if (season === "芒種") {
-    for (let i = 0; i < 25; i++) {
-      const grain = document.createElement("div");
-      grain.className = "grain";
-      grain.style.left = Math.random() * 100 + "%";
-      grain.style.animationDelay = Math.random() * 8 + "s";
-      container.appendChild(grain);
-    }
-  }
-}
-
-// ⏳ 預設啟用「芒種」節氣粒子動畫
-window.onload = () => applySeasonalEffect("芒種");
