@@ -1,5 +1,5 @@
 // script.js
-import { db } from "./Firebase-init.js";
+import { db } from './firebase-init.js';
 import { collection, addDoc, getDocs, Timestamp } from "firebase/firestore";
 
 let blockedUsers = [];
