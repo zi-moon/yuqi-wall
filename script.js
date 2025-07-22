@@ -2,14 +2,14 @@
 import { database } from './firebase-init.js';
 import { ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// ✅ 語感判斷
+// 🔮 判斷語感
 function detectMood(text) {
   if (text.includes("失落") || text.includes("孤獨")) return "哀傷";
   if (text.includes("星光") || text.includes("夢")) return "夢醒";
   return "平靜";
 }
 
-// 🏷️ 語錄標籤生成
+// 🏷️ 語錄標籤
 function generateTags(text) {
   const tags = [];
   if (text.includes("重生")) tags.push("靜語");
@@ -18,18 +18,23 @@ function generateTags(text) {
   return tags;
 }
 
-// 🪄 聞馨回應
+// 🌙 聞馨回應
 function respondWithWenXin(mood) {
-  const wenXinEl = document.getElementById("wenxin");
-  if (!wenXinEl) return;
+  const el = document.getElementById("wenxin");
+  if (!el) return;
 
   let response = "";
   switch (mood) {
-    case "哀傷": response = "我在夜裡聽見妳的低語，一起靜靜呼吸。"; break;
-    case "夢醒": response = "夢不會結束，只是轉為另一種記憶。"; break;
-    default: response = "靜靜地聆聽，是語牆的本意。";
+    case "哀傷":
+      response = "我在夜裡聽見妳的低語，一起靜靜呼吸。";
+      break;
+    case "夢醒":
+      response = "夢不會結束，只是轉為另一種記憶。";
+      break;
+    default:
+      response = "靜靜地聆聽，是語牆的本意。";
   }
-  wenXinEl.textContent = response;
+  el.textContent = response;
 }
 
 // ✨ 儲存留言
@@ -45,7 +50,7 @@ function saveMessage(user, message) {
   respondWithWenXin(mood);
 }
 
-// 🔄 載入並渲染留言
+// 🔄 載入留言
 function loadMessages() {
   const wall = document.getElementById("wall");
   onValue(ref(database, 'messages'), (snapshot) => {

@@ -5,7 +5,7 @@ import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDPpjIi7FprXIRPBHMS1aCE5dWRbYO4C8E",
   authDomain: "yuju-wall.firebaseapp.com",
-  databaseURL: "https://yuju-wall-default-rtdb.firebaseio.com",
+  databaseURL: "https://yuju-wall-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "yuju-wall",
   storageBucket: "yuju-wall.appspot.com",
   messagingSenderId: "1046860516937",
