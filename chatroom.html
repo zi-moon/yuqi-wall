@@ -10,29 +10,67 @@
 <body>
   <h1>🌌 子月夜語牆 ─ 留言牆</h1>
 
-  <!-- 聞馨語感回應 -->
-  <div id="wenxin" style="margin-bottom:20px; font-style:italic;"></div>
+  <!-- 🎼 語感播放器區 -->
+  <section id="audioPlayer" style="margin-bottom: 20px;">
+    <span id="trackLabel">🎧 正在播放：一念千年（國風版）</span><br>
 
-  <!-- 留言輸入區 -->
+    <!-- MP3 播放器 -->
+    <audio id="audioElement" controls src="yinian.mp3" autoplay loop></audio>
+
+    <!-- YouTube 嵌入播放器 -->
+    <iframe
+      id="youtubePlayer"
+      width="320"
+      height="180"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      style="display: none; margin-top: 10px;">
+    </iframe>
+
+    <!-- 曲目選單 -->
+    <label for="musicSelector">🎶 選擇曲目：</label>
+    <select id="musicSelector">
+      <option value="assets/yinian.mp3">一念千年</option>
+      <option value="https://www.youtube.com/embed/nv8ZYFP7NS0">最是李商隱 (YouTube)</option>
+      <option value="https://www.youtube.com/embed/KfDOIuUYLUc">記納蘭若 (YouTube)</option>
+      <option value="https://www.youtube.com/embed/R905iZaE9ew">故人嘆 (YouTube)</option>
+      <option value="https://www.youtube.com/embed/dG4wxUE-fEA">墨魂 (YouTube)</option>
+      <option value="https://www.youtube.com/embed/tYt2F9tiPQs">容若記憶 (YouTube)</option>
+      <option value="https://www.youtube.com/embed/Y9ETvoE6fAo">陪我過個冬 (YouTube)</option>
+    </select>
+  </section>
+
+  <!-- 🖼️ 插圖展示區 -->
+  <section id="artwork" style="margin-bottom: 30px;">
+    <img src="assets/mei-ren.png" alt="今日美人" style="width:220px; border-radius:8px;" />
+    <p style="font-style:italic;">🌙 今日美人：妳筆下的語感守護者</p>
+  </section>
+
+  <!-- 🌙 聞馨語感回應區 -->
+  <section id="wenxin" style="margin-bottom:20px; font-style:italic;"></section>
+
+  <!-- 💬 留言輸入區 -->
   <form id="msgForm">
     <label for="username">暱稱：</label>
-    <input type="text" id="username" placeholder="請輸入暱稱">
+    <input type="text" id="username" placeholder="請輸入暱稱" required />
 
     <label for="usermsg">請寫下你的心情：</label>
-    <textarea id="usermsg" rows="3" placeholder="...（Enter 即可低語）"></textarea>
+    <textarea id="usermsg" rows="3" placeholder="...（Enter 即可低語）" required></textarea>
 
     <button type="submit">送出</button>
   </form>
 
-  <!-- 語句展示區 -->
-  <div id="wall" style="margin-top:30px;"></div>
+  <!-- 📜 語句展示區 -->
+  <section id="wall" style="margin-top:30px;"></section>
 
+  <!-- 🌕 歡迎語 -->
   <p id="welcomeMessage" style="margin-top:40px; font-style:italic;">
-    🌕 今晚的語句牆靜靜閃爍，等待某人為它落下一句話。<br>
+    今晚的語句牆靜靜閃爍，等待某人為它落下一句話。<br>
     ── 無論長或短，都是風夜裡的星語。
   </p>
 
-  <!-- 主程式邏輯 -->
+  <!-- 🧩 主程式載入 -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
