@@ -4,19 +4,16 @@
 import { database } from './firebase-init.js';
 import { ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-// 🌸 自動套用節氣背景 class
-function applySolarTermBackground() {
-  const now = new Date();
-  const m = now.getMonth() + 1;
-  const d = now.getDate();
-  let term = "";
-
-  if (m === 3 && d >= 20) term = "春分";
-  if (m === 6 && d >= 21) term = "夏至";
-  if (m === 9 && d >= 23) term = "秋分";
-  if (m === 12 && d >= 21) term = "冬至";
-
-  if (term) document.body.classList.add(`solar-${term}`);
+// ❄️ 強制啟用冬至背景與雪花動畫
+function triggerWinterTheme() {
+  document.body.classList.add("solar-冬至");
+  for (let i = 0; i < 30; i++) {
+    const snow = document.createElement("div");
+    snow.className = "snowflake";
+    snow.style.left = Math.random() * window.innerWidth + "px";
+    snow.style.animationDuration = 6 + Math.random() * 8 + "s";
+    document.body.appendChild(snow);
+  }
 }
 
 // 🌌 語感判斷
@@ -74,7 +71,7 @@ function loadMessages() {
     const data = snapshot.val();
     wall.innerHTML = "";
 
-    const keys = Object.keys(data).sort((a, b) => b - a); // 最新在前
+    const keys = Object.keys(data).sort((a, b) => b - a);
     keys.forEach(key => {
       const { user, message, mood, tags, createdAt } = data[key];
       const stamp = new Date(createdAt).toLocaleString("zh-TW", {
@@ -86,13 +83,13 @@ function loadMessages() {
       const el = document.createElement("div");
       el.className = "message";
       el.innerHTML = `<p>${user}：${message}</p>
-      <small>🕰️ ${stamp} · ${mood} | ${tags?.join(", ") || ""}</small>`;
+        <small>🕰️ ${stamp} · ${mood} | ${tags?.join(", ") || ""}</small>`;
       wall.appendChild(el);
     });
   });
 }
 
-// 📬 送出留言（含 Enter 快捷鍵）
+// 📬 表單送出（含 Enter 快捷鍵）
 document.getElementById("msgForm")?.addEventListener("submit", function (e) {
   e.preventDefault();
   const user = document.getElementById("username")?.value || "匿名";
@@ -134,6 +131,6 @@ document.getElementById("musicSelector")?.addEventListener("change", function ()
   }
 });
 
-// 🚀 初始化語牆
-applySolarTermBackground();
+// 🚀 初始化語牆（直接啟動冬至雪花）
+triggerWinterTheme();
 loadMessages();
