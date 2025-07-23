@@ -71,7 +71,7 @@ function loadMessages() {
     const data = snapshot.val();
     wall.innerHTML = "";
 
-    const keys = Object.keys(data).sort((a, b) => b - a);
+    const keys = Object.keys(data).sort((a, b) => b - a).slice(0, 50);
     keys.forEach(key => {
       const { user, message, mood, tags, createdAt } = data[key];
       const stamp = new Date(createdAt).toLocaleString("zh-TW", {
