@@ -142,17 +142,18 @@ button:hover {
 .snowflake {
   position: absolute;
   top: -50px;
-  width: 14px; /* 大小微調 */
-  height: 14px;
-  background-color: #325a9c; /* 深藍色，代表靜夜思念 */
+  width: 20px;
+  height: 20px;
+  background-color: #325a9c;
   clip-path: polygon(
     50% 0%, 93% 25%, 93% 75%,
     50% 100%, 7% 75%, 7% 25%
-  ); /* 六角形輪廓 */
-  opacity: 0.6;
-  border-radius: 2px; /* 微弧邊緣，加柔感 */
+  );
+  opacity: 0.8;
+  box-shadow: 0 0 2px #fff;
   animation: fall 12s linear infinite;
 }
+
 
 
 @keyframes fall {
